@@ -7,14 +7,14 @@ export ZLIB_VER_='1.2.8'
 export ZLIB_HASH=e380bd1bdb6447508beaa50efc653fe45f4edc1dafe11a251ae093e0ee97db9a
 export LIBIDN_VER_='1.32'
 export LIBIDN_HASH=ba5d5afee2beff703a34ee094668da5c6ea5afa38784cebba8924105e185c4f5
-export NGHTTP2_VER_='1.9.1'
-export NGHTTP2_HASH=45676dc062c3db20b3d5a86c8f26f37ad79d523d0a761672a8036b7e34becadc
+export NGHTTP2_VER_='1.10.0'
+export NGHTTP2_HASH=b0921f69d66b2344393369cee02792d58ee0a7ce0354a19409d3dc0ee99025d5
 export CARES_VER_='1.11.0'
 export CARES_HASH=b3612e6617d9682928a1d50c1040de4db6519f977f0b25d40cf1b632900b3efd
-export LIBRESSL_VER_='2.3.3'
-export LIBRESSL_HASH=76733166187cc8587e0ebe1e83965ef257262a1a676a36806edd3b6d51b50aa9
-export OPENSSL_VER_='1.0.2g'
-export OPENSSL_HASH=b784b1b3907ce39abf4098702dade6365522a253ad1552e267a9a0e89594aa33
+export LIBRESSL_VER_='2.3.4'
+export LIBRESSL_HASH=7a1135b2620f78928e89538c211a4df1d9415994001d1e7c9178c6b6d72de6a9
+export OPENSSL_VER_='1.0.2h'
+export OPENSSL_HASH=1d4007e53aad94a5b2002fe045ee7bb0b3d98f1a47f8b2bc851dcd1c74332919
 export LIBRTMP_VER_='2.4+20151223'
 export LIBRTMP_HASH=f8eb8d0c8ed085c90666ba0e8fbe0e960e0cf0c2a58604fda3ed85a28f2ef5f6
 export LIBSSH2_VER_='1.7.0'
@@ -50,7 +50,7 @@ if [ "${_BRANCH#*msysmingw*}" = "${_BRANCH}" ] ; then
 fi
 
 # nghttp2
-curl -o pack.bin -L --proto-redir =https "https://github.com/tatsuhiro-t/nghttp2/releases/download/v${NGHTTP2_VER_}/nghttp2-${NGHTTP2_VER_}.tar.bz2" || exit 1
+curl -o pack.bin -L --proto-redir =https "https://github.com/nghttp2/nghttp2/releases/download/v${NGHTTP2_VER_}/nghttp2-${NGHTTP2_VER_}.tar.bz2" || exit 1
 openssl dgst -sha256 pack.bin | grep -q "${NGHTTP2_HASH}" || exit 1
 tar -xvf pack.bin > /dev/null 2>&1 || exit 1
 rm pack.bin
@@ -78,7 +78,7 @@ if [ "${_BRANCH#*cares*}" != "${_BRANCH}" ] ; then
    else
       curl -o pack.bin "http://c-ares.haxx.se/download/c-ares-${CARES_VER_}.tar.gz" || exit 1
       curl -o pack.sig "http://c-ares.haxx.se/download/c-ares-${CARES_VER_}.tar.gz.asc" || exit 1
-      gpg -q --keyserver hkps://pgp.mit.edu --recv-keys 78E11C6B279D5C91
+      gpg -q --keyserver hkps://pgp.mit.edu --recv-keys 5CC908FDB71E12C2 78E11C6B279D5C91
       gpg --verify pack.sig pack.bin || exit 1
       openssl dgst -sha256 pack.bin | grep -q "${CARES_HASH}" || exit 1
    fi
@@ -135,7 +135,7 @@ if [ "${_BRANCH#*dev*}" != "${_BRANCH}" ] ; then
 else
    curl -o pack.bin -L --proto-redir =https "https://libssh2.org/download/libssh2-${LIBSSH2_VER_}.tar.gz" || exit 1
    curl -o pack.sig -L --proto-redir =https "https://libssh2.org/download/libssh2-${LIBSSH2_VER_}.tar.gz.asc" || exit 1
-   gpg -q --keyserver hkps://pgp.mit.edu --recv-keys 78E11C6B279D5C91
+   gpg -q --keyserver hkps://pgp.mit.edu --recv-keys 5CC908FDB71E12C2 78E11C6B279D5C91
    gpg --verify pack.sig pack.bin || exit 1
    openssl dgst -sha256 pack.bin | grep -q "${LIBSSH2_HASH}" || exit 1
 fi
@@ -151,7 +151,7 @@ if [ "${_BRANCH#*dev*}" != "${_BRANCH}" ] ; then
 else
    curl -o pack.bin "https://curl.haxx.se/download/curl-${CURL_VER_}.tar.bz2" || exit 1
    curl -o pack.sig "https://curl.haxx.se/download/curl-${CURL_VER_}.tar.bz2.asc" || exit 1
-   gpg -q --keyserver hkps://pgp.mit.edu --recv-keys 78E11C6B279D5C91
+   gpg -q --keyserver hkps://pgp.mit.edu --recv-keys 5CC908FDB71E12C2 78E11C6B279D5C91
    gpg --verify pack.sig pack.bin || exit 1
    openssl dgst -sha256 pack.bin | grep -q "${CURL_HASH}" || exit 1
 fi
