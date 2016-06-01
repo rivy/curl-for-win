@@ -42,6 +42,7 @@ _cpu="$2"
       CURL_LDFLAG_EXTRAS_DLL='-Wl,--image-base,0x150000000'
       CURL_LDFLAG_EXTRAS="${CURL_LDFLAG_EXTRAS} -Wl,--high-entropy-va"
    fi
+   CURL_LDFLAG_EXTRAS_EXE="${CURL_LDFLAG_EXTRAS_EXE} -Wl,-Map,curl.map"
 
    # Generate .def file for libcurl by parsing curl headers.
    # Useful to limit .dll exports to libcurl functions meant to be exported.
@@ -110,7 +111,7 @@ _cpu="$2"
 
    readonly _ref='CHANGES'
 
-   strip -p --enable-deterministic-archives -g lib/*.a
+#  strip -p --enable-deterministic-archives -g lib/*.a
 
    ../_peclean.py "${_ref}" 'src/*.exe'
    ../_peclean.py "${_ref}" 'lib/*.dll'
