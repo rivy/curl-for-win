@@ -1,0 +1,51 @@
+diff --git a/lib/ssh.c b/lib/ssh.c
+index d5a1a2a..4ed7dcd 100644
+--- a/lib/ssh.c
++++ b/lib/ssh.c
+@@ -489,14 +489,21 @@ static int sshkeycallback(CURL *easy,
+ }
+ #endif
+ 
++#define _STR_HELPER(x) #x
++#define _STR(x) _STR_HELPER(x)
++#pragma message "libssh2 build-time version: " _STR(LIBSSH2_VERSION_NUM)
++#pragma message "libssh2 build-time version: " _STR(LIBSSH2_VERSION)
++
+ /*
+  * Earlier libssh2 versions didn't have the ability to seek to 64bit positions
+  * with 32bit size_t.
+  */
+ #ifdef HAVE_LIBSSH2_SFTP_SEEK64
+ #define SFTP_SEEK(x,y) libssh2_sftp_seek64(x, (libssh2_uint64_t)y)
++#pragma message "supporting seek64"
+ #else
+ #define SFTP_SEEK(x,y) libssh2_sftp_seek(x, (size_t)y)
++#pragma message "NOT supporting seek64"
+ #endif
+ 
+ /*
+@@ -504,8 +511,10 @@ static int sshkeycallback(CURL *easy,
+  * architectures so we check of the necessary function is present.
+  */
+ #ifndef HAVE_LIBSSH2_SCP_SEND64
++#pragma message "supporting send64"
+ #define SCP_SEND(a,b,c,d) libssh2_scp_send_ex(a, b, (int)(c), (size_t)d, 0, 0)
+ #else
++#pragma message "NOT supporting send64"
+ #define SCP_SEND(a,b,c,d) libssh2_scp_send64(a, b, (int)(c),            \
+                                              (libssh2_uint64_t)d, 0, 0)
+ #endif
+@@ -2481,11 +2490,13 @@ static CURLcode ssh_statemach_act(struct connectdata *conn, bool *block)
+ 
+       /* get a fresh new channel from the ssh layer */
+ #if LIBSSH2_VERSION_NUM < 0x010700
++#pragma message "NOT supporting recv2"
+       struct stat sb;
+       memset(&sb, 0, sizeof(struct stat));
+       sshc->ssh_channel = libssh2_scp_recv(sshc->ssh_session,
+                                            sftp_scp->path, &sb);
+ #else
++#pragma message "supporting recv2"
+       libssh2_struct_stat sb;
+       memset(&sb, 0, sizeof(libssh2_struct_stat));
+       sshc->ssh_channel = libssh2_scp_recv2(sshc->ssh_session,
