@@ -42,7 +42,9 @@ _cpu="$2"
       CURL_LDFLAG_EXTRAS_DLL='-Wl,--image-base,0x150000000'
       CURL_LDFLAG_EXTRAS="${CURL_LDFLAG_EXTRAS} -Wl,--high-entropy-va"
    fi
+
    CURL_LDFLAG_EXTRAS_EXE="${CURL_LDFLAG_EXTRAS_EXE} -Wl,-Map,curl.map"
+   CURL_LDFLAG_EXTRAS_DLL="${CURL_LDFLAG_EXTRAS_DLL} -Wl,-Map,libcurl.map"
 
    # Generate .def file for libcurl by parsing curl headers.
    # Useful to limit .dll exports to libcurl functions meant to be exported.
@@ -167,6 +169,9 @@ _cpu="$2"
    cp -f -p README                   "${_DST}/README.txt"
    cp -f -p RELEASE-NOTES            "${_DST}/RELEASE-NOTES.txt"
    cp -f -p ../ca-bundle.crt         "${_DST}/bin/curl-ca-bundle.crt"
+
+   cp -f -p src/*.map                "${_DST}/bin/"
+   cp -f -p lib/*.map                "${_DST}/bin/"
 
    [ -d ../libssh2 ]  && cp -f -p ../libssh2/COPYING  "${_DST}/COPYING-libssh2.txt"
    [ -d ../nghttp2 ]  && cp -f -p ../nghttp2/COPYING  "${_DST}/COPYING-nghttp2.txt"
