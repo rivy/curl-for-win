@@ -1,5 +1,5 @@
 diff --git a/lib/ssh.c b/lib/ssh.c
-index d5a1a2a..4ed7dcd 100644
+index d5a1a2a..85d50ae 100644
 --- a/lib/ssh.c
 +++ b/lib/ssh.c
 @@ -489,14 +489,21 @@ static int sshkeycallback(CURL *easy,
@@ -28,10 +28,10 @@ index d5a1a2a..4ed7dcd 100644
   * architectures so we check of the necessary function is present.
   */
  #ifndef HAVE_LIBSSH2_SCP_SEND64
-+#pragma message "supporting send64"
++#pragma message "NOT supporting send64"
  #define SCP_SEND(a,b,c,d) libssh2_scp_send_ex(a, b, (int)(c), (size_t)d, 0, 0)
  #else
-+#pragma message "NOT supporting send64"
++#pragma message "supporting send64"
  #define SCP_SEND(a,b,c,d) libssh2_scp_send64(a, b, (int)(c),            \
                                               (libssh2_uint64_t)d, 0, 0)
  #endif
