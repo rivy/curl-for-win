@@ -1,0 +1,12 @@
+diff --git a/include/libssh2.h b/include/libssh2.h
+index c157757..bbca31e 100644
+--- a/include/libssh2.h
++++ b/include/libssh2.h
+@@ -185,6 +185,7 @@ typedef int libssh2_socket_t;
+ #  define LIBSSH2_STRUCT_STAT_SIZE_FORMAT    "%I64d"
+ typedef struct _stati64 libssh2_struct_stat;
+ typedef __int64 libssh2_struct_stat_size;
++#pragma message "enabled: LIBSSH2_STRUCT_STAT_SIZE_FORMAT"
+ #endif
+ 
+ /*
