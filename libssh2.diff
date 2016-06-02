@@ -1,12 +1,28 @@
 diff --git a/include/libssh2.h b/include/libssh2.h
-index c157757..bbca31e 100644
+index c157757..4cc0d8e 100644
 --- a/include/libssh2.h
 +++ b/include/libssh2.h
 @@ -185,6 +185,7 @@ typedef int libssh2_socket_t;
  #  define LIBSSH2_STRUCT_STAT_SIZE_FORMAT    "%I64d"
  typedef struct _stati64 libssh2_struct_stat;
  typedef __int64 libssh2_struct_stat_size;
-+#pragma message "enabled: LIBSSH2_STRUCT_STAT_SIZE_FORMAT"
++#pragma message "enabled: LIBSSH2_USE_WIN32_LARGE_FILES"
  #endif
  
  /*
+@@ -198,6 +199,7 @@ typedef __int64 libssh2_struct_stat_size;
+ #    define LIBSSH2_STRUCT_STAT_SIZE_FORMAT    "%d"
+ typedef struct _stat libssh2_struct_stat;
+ typedef off_t libssh2_struct_stat_size;
++#pragma message "enabled: LIBSSH2_USE_WIN32_SMALL_FILES"
+ #  endif
+ #endif
+ 
+@@ -205,6 +207,7 @@ typedef off_t libssh2_struct_stat_size;
+ #  define LIBSSH2_STRUCT_STAT_SIZE_FORMAT      "%zd"
+ typedef struct stat libssh2_struct_stat;
+ typedef off_t libssh2_struct_stat_size;
++#pragma message "enabled: LIBSSH2_USE_WIN32_SMALL_FILES #2"
+ #endif
+ 
+ /* Part of every banner, user specified or not */
